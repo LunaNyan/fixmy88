@@ -1,4 +1,7 @@
-# What controls to need be processed
+# TODO
+- Remove duplicated setup messages
+
+## What controls to need be processed
 - TVF LPF (CC#74) → MSB 1 / LSB 32
 - Resonance (CC#71) → MSB 1 / LSB 33
 - TVF&TVA Envelope
