@@ -12,7 +12,12 @@ try:
     if argv[3] == "2port":
         dualport = True
     else:
-        dualport = False
+        print("type '2port' properly")
+        i = input("Use 2-Port mode?")
+        if i == "y" or i == "Y":
+            dualport = True
+        else:
+            dualport = False
 except IndexError:
     try:
         if argv[2] == "2port":
