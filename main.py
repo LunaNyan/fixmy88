@@ -1,7 +1,9 @@
 import mido
 from sys import argv, exit
 
-if len(argv) < 1:
+print("Nahida's Rubber Hammer : Convert SC-8850 Exclusive Control to NRPN")
+
+if len(argv) == 1:
     print("Usage : main.py (MIDI File) [Output File] [2port]")
     print("e.g. main.py test.mid → test_out.mid")
     exit(1)
