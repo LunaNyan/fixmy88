@@ -30,6 +30,9 @@ except IndexError:
 f = mido.MidiFile(argv[1])
 mid_cnv = mido.MidiFile()
 
+mid_cnv.charset = f.charset
+mid_cnv.ticks_per_beat = f.ticks_per_beat
+
 cnt = 1
 
 for tr in f.tracks:
@@ -51,7 +54,6 @@ for tr in f.tracks:
         # CC Mitigation
         if msg.is_cc(74):
             # TVF LPF
-            print("TVF LPF = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=32, time=0))
@@ -59,7 +61,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(71):
             # TVF Resonance
-            print("TVF Resonance = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=33, time=0))
@@ -67,7 +68,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(73):
             # TVF & TVA Attack Time
-            print("TVF & TVA Attack Time = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=99, time=0))
@@ -75,7 +75,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(75):
             # TVF & TVA Decay Time
-            print("TVF & TVA Decay Time = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=100, time=0))
@@ -83,7 +82,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(72):
             # TVF & TVA Release Time
-            print("TVF & TVA Release Time = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=102, time=0))
@@ -91,7 +89,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(76):
             # Vibrato Rate
-            print("Vibrato Rate = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=8, time=0))
@@ -99,7 +96,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(77):
             # Vibrato Depth
-            print("Vibrato Depth = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=9, time=0))
@@ -107,7 +103,6 @@ for tr in f.tracks:
             cc_prev = msg.control
         elif msg.is_cc(78):
             # Vibrato Delay
-            print("Vibrato Delay = " + str(msg.value))
             if cc_prev != msg.control:
                 tro.append(mido.Message('control_change', channel=msg.channel, control=98, value=1, time=0))
                 tro.append(mido.Message('control_change', channel=msg.channel, control=99, value=10, time=0))
@@ -127,7 +122,7 @@ if len(argv) == 2:
     sfn = argv[1] + "_out.mid"
 elif len(argv) == 3 and argv[2] == "2port":
     # argv 개수는 3개이나 Output Path가 지정되지 않음
-    sfn = argv[1] + "_out.mid"
+    sfn = argv[1].replace(".mid", "") + "_out.mid"
 elif argv[2].endswith(".mid"):
     sfn = argv[2]
 else:
