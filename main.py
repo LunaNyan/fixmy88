@@ -51,6 +51,12 @@ for tr in f.tracks:
             else:
                 tro.append(msg)
                 tro.append(mido.MetaMessage('midi_port', port=0, time=0))
+        # RPN null 스킵
+        if msg.is_cc(100) or msg.is_cc(101):
+            if msg.value == 127:
+                continue
+            else:
+                tro.append(msg)
         # CC Mitigation
         if msg.is_cc(74):
             # TVF LPF
